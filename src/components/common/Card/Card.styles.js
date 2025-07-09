@@ -1,11 +1,6 @@
 import styled, { css } from 'styled-components';
 
-interface CardContainerProps {
-  elevated: boolean;
-  hoverable: boolean;
-}
-
-export const CardContainer = styled.div<CardContainerProps>`
+export const CardContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors.border};

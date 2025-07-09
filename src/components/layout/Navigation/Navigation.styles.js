@@ -1,10 +1,6 @@
 import styled, { css } from 'styled-components';
 
-interface NavigationContainerProps {
-  isOpen: boolean;
-}
-
-export const NavigationContainer = styled.nav<NavigationContainerProps>`
+export const NavigationContainer = styled.nav`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     position: absolute;
     top: 100%;

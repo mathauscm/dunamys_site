@@ -9,10 +9,6 @@ const spin = keyframes`
   }
 `;
 
-interface SpinnerProps {
-  size: 'small' | 'medium' | 'large';
-}
-
 const sizes = {
   small: '20px',
   medium: '40px',
@@ -27,7 +23,7 @@ export const LoadingContainer = styled.div`
   gap: 1rem;
 `;
 
-export const Spinner = styled.div<SpinnerProps>`
+export const Spinner = styled.div`
   ${({ size }) => css`
     width: ${sizes[size]};
     height: ${sizes[size]};

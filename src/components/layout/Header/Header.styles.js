@@ -1,9 +1,5 @@
 import styled, { css } from 'styled-components';
 
-interface MenuIconProps {
-  isOpen: boolean;
-}
-
 export const HeaderContainer = styled.header`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -44,7 +40,7 @@ export const MenuToggle = styled.button`
   }
 `;
 
-export const MenuIcon = styled.div<MenuIconProps>`
+export const MenuIcon = styled.div`
   width: 24px;
   height: 2px;
   background-color: ${({ theme }) => theme.colors.text};

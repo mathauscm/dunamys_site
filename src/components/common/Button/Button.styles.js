@@ -1,10 +1,5 @@
 import styled, { css } from 'styled-components';
 
-interface ButtonContainerProps {
-  variant: 'primary' | 'secondary' | 'outline';
-  size: 'small' | 'medium' | 'large';
-}
-
 const sizes = {
   small: css`
     padding: 8px 16px;
@@ -56,7 +51,7 @@ const variants = {
   `,
 };
 
-export const ButtonContainer = styled.button<ButtonContainerProps>`
+export const ButtonContainer = styled.button`
   font-family: 'Avenir', sans-serif;
   font-weight: 600;
   cursor: pointer;

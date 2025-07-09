@@ -1,9 +1,5 @@
 import styled, { css } from 'styled-components';
 
-interface ContainerWrapperProps {
-  maxWidth: 'sm' | 'md' | 'lg' | 'xl' | 'full';
-}
-
 const maxWidths = {
   sm: '640px',
   md: '768px',
@@ -12,7 +8,7 @@ const maxWidths = {
   full: '100%',
 };
 
-export const ContainerWrapper = styled.div<ContainerWrapperProps>`
+export const ContainerWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 0 1rem;

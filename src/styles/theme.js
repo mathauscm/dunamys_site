@@ -81,6 +81,4 @@ export const theme = {
     popover: 1050,
     tooltip: 1060,
   },
-} as const;
-
-export type Theme = typeof theme;
+};
