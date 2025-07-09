@@ -4,9 +4,9 @@ import { NavigationContainer, NavigationList, NavigationItem, NavigationLink } f
 
 const navigationItems = [
   { label: 'Início', href: '#home' },
-  { label: 'Sobre', href: '#about' },
-  { label: 'Ministérios', href: '#services' },
-  { label: 'Programação', href: '#schedule' },
+  { label: 'Somos', href: '#about' },
+  { label: 'Reuniões', href: '#meetings' },
+  { label: 'SuperClasse', href: '#superclass' },
   { label: 'Generosidade', href: '#generosity' },
   { label: 'Contato', href: '#contact' },
 ];

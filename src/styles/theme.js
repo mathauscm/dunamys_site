@@ -17,6 +17,7 @@ export const theme = {
     warning: '#ffc107',
     error: '#dc3545',
     info: '#17a2b8',
+    accent: '#ff6b35',
   },
   fonts: {
     primary: "'Cormorant Garamond', serif",

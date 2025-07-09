@@ -18,32 +18,36 @@ export const Footer = () => {
       <Container>
         <FooterContent>
           <FooterSection>
-            <FooterTitle>Igreja Dunamys</FooterTitle>
+            <FooterTitle>Comunidade Cristã Dunamys</FooterTitle>
             <FooterText>
-              Uma igreja comprometida com a transformação de vidas através do amor de Cristo.
+              Uma comunidade de fé comprometida em servir a Deus e as pessoas através dos ensinamentos de Cristo, 
+              treinando líderes para propagar o poderoso Evangelho.
+            </FooterText>
+            <FooterText>
+              <strong>DUNAMYS</strong> - Palavra grega que significa <strong>PODER</strong>
             </FooterText>
           </FooterSection>
           
           <FooterSection>
-            <FooterTitle>Contato</FooterTitle>
+            <FooterTitle>Localização</FooterTitle>
             <FooterText>
-              <FooterLink href="mailto:contato@dunamys.com">
-                contato@dunamys.com
-              </FooterLink>
+              <strong>Tianguá - CE</strong><br />
+              Serra da Ibiapaba
             </FooterText>
             <FooterText>
-              <FooterLink href="tel:+5511999999999">
-                (11) 99999-9999
-              </FooterLink>
+              <strong>Ubajara - CE</strong><br />
+              Serra da Ibiapaba
             </FooterText>
           </FooterSection>
           
           <FooterSection>
-            <FooterTitle>Endereço</FooterTitle>
+            <FooterTitle>Horários dos Cultos</FooterTitle>
             <FooterText>
-              Rua das Flores, 123<br />
-              Bairro Centro<br />
-              São Paulo - SP
+              <strong>Domingos</strong>
+            </FooterText>
+            <FooterText>
+              9h30 - Tianguá<br />
+              19h - Ubajara
             </FooterText>
           </FooterSection>
           
@@ -60,12 +64,18 @@ export const Footer = () => {
                 📹
               </SocialLink>
             </SocialLinks>
+            <FooterText style={{textAlign: 'center', marginTop: '1rem'}}>
+              @dunamysubajara
+            </FooterText>
           </FooterSection>
         </FooterContent>
         
         <FooterBottom>
           <FooterText>
-            © 2024 Igreja Dunamys. Todos os direitos reservados.
+            © 2024 Comunidade Cristã Dunamys. Todos os direitos reservados.
+          </FooterText>
+          <FooterText>
+            Desenvolvido com ❤️ para o Reino de Deus
           </FooterText>
         </FooterBottom>
       </Container>

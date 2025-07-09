@@ -24,14 +24,14 @@ export const Hero = () => {
       <Container>
         <HeroContent>
           <HeroTitle>
-            Bem-vindos à Igreja Dunamys
+            Seja Bem-Vindo à sua Família!
           </HeroTitle>
           <HeroSubtitle>
-            Transformando vidas através do amor de Cristo
+            Comunidade Cristã Dunamys
           </HeroSubtitle>
           <HeroText>
-            Somos uma comunidade de fé comprometida em viver e compartilhar o evangelho,
-            cultivando relacionamentos autênticos e impactando nossa cidade com o amor de Deus.
+            Somos uma Comunidade Cristã que cremos! Impossibilidades se tornam possibilidades pela Fé.
+            É fato: tudo é possível para aquele que crê!
           </HeroText>
           <HeroActions>
             <Button
@@ -39,14 +39,14 @@ export const Hero = () => {
               size="large"
               onClick={() => scrollToSection('#about')}
             >
-              Conheça nossa história
+              Conheça nossa missão
             </Button>
             <Button
               variant="outline"
               size="large"
-              onClick={() => scrollToSection('#schedule')}
+              onClick={() => scrollToSection('#meetings')}
             >
-              Ver programação
+              Ver reuniões
             </Button>
           </HeroActions>
         </HeroContent>
