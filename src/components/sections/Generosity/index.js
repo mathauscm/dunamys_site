@@ -1,1 +1,0 @@
-export { Generosity } from './Generosity';

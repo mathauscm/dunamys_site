@@ -1,1 +1,0 @@
-export { SuperClass } from './SuperClass';
