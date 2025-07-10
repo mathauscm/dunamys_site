@@ -21,7 +21,7 @@ const DunamysTV = () => {
       }
 
       const videosResponse = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&key=${YOUTUBE_API_KEY}&maxResults=12`
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&key=${YOUTUBE_API_KEY}&maxResults=20`
       );
 
       if (!videosResponse.ok) throw new Error("Erro ao buscar vídeos");
@@ -74,11 +74,11 @@ const DunamysTV = () => {
   };
 
   const scrollCarousel = (direction) => {
-    const maxIndex = Math.max(0, videos.length - 4);
+    const maxIndex = Math.max(0, videos.length - 6);
     if (direction === "left") {
-      setCarouselStartIndex(Math.max(0, carouselStartIndex - 1));
+      setCarouselStartIndex(Math.max(0, carouselStartIndex - 2));
     } else {
-      setCarouselStartIndex(Math.min(maxIndex, carouselStartIndex + 1));
+      setCarouselStartIndex(Math.min(maxIndex, carouselStartIndex + 2));
     }
   };
 
@@ -184,30 +184,30 @@ const DunamysTV = () => {
       {/* Lista de vídeos */}
       <div className="py-10 bg-gray-900">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-6">
-            <div className="flex space-x-2">
-              <button
-                onClick={() => scrollCarousel("left")}
-                disabled={carouselStartIndex === 0}
-                className="p-2 bg-gray-800 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={() => scrollCarousel("right")}
-                disabled={carouselStartIndex >= videos.length - 4}
-                className="p-2 bg-gray-800 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-          </div>
+          <div className="relative">
+            {/* Setas posicionadas sobre o carrossel */}
+            <button
+              onClick={() => scrollCarousel("left")}
+              disabled={carouselStartIndex === 0}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 disabled:opacity-30 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex items-center justify-center text-white opacity-70 hover:opacity-100 hover:scale-110"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            <button
+              onClick={() => scrollCarousel("right")}
+              disabled={carouselStartIndex >= videos.length - 6}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 disabled:opacity-30 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex items-center justify-center text-white opacity-70 hover:opacity-100 hover:scale-110"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Grid dos vídeos */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {visibleVideos.map((video) => (
               <div
                 key={video.id}
@@ -218,10 +218,10 @@ const DunamysTV = () => {
                   <img
                     src={video.thumbnail}
                     alt={video.title}
-                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
-                    {formatDuration(video.duration)}
+                  <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs max-w-[calc(100%-1rem)] truncate">
+                    {video.title}
                   </div>
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-200 flex items-center justify-center">
                     <div className="w-10 h-10 rounded-full bg-[#8B9A3D] flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200">
@@ -231,15 +231,9 @@ const DunamysTV = () => {
                     </div>
                   </div>
                 </div>
-                <div className="p-4">
-                  <h4 className="text-white font-semibold text-sm mb-2 line-clamp-2">{video.title}</h4>
-                  <div className="text-gray-400 text-xs flex justify-between">
-                    <span>{formatViews(video.viewCount)}</span>
-                    <span>{formatDate(video.publishedAt)}</span>
-                  </div>
-                </div>
               </div>
             ))}
+            </div>
           </div>
         </div>
       </div>

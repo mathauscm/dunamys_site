@@ -8,11 +8,47 @@ const DunamysTVPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [carouselStartIndex, setCarouselStartIndex] = useState(0);
+  const [ministracaoStartIndex, setMinistracaoStartIndex] = useState(0);
+  const [serieStartIndex, setSerieStartIndex] = useState(0);
   const [videoError, setVideoError] = useState(false);
 
   // Configuração da API do YouTube
   const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
   const CHANNEL_ID = "UCPE_zGPRLEf-0dUYnxKcwTw"; // Canal @dunamystv
+
+  // Vídeos específicos para cada categoria
+  const ministracoes = [
+    { id: 'eQiG4VxAioc', title: 'Crescendo Espiritualmente - Pr. Diego Freitas', startTime: '2448s' },
+    { id: '4hC_MezJQzM', title: 'Exercitando a piedade - Pr. Diego Freitas' },
+    { id: 'eQiG4VxAioc', title: 'Como vencer as tentações através da oração - Pr. Diego Freitas', startTime: '2448s' },
+    { id: 'Fox-CH2aObI', title: 'Aprenda orar eficazmente com Jesus - Pr. Diego Freitas', startTime: '14s' },
+    { id: 'LiKrDiPq68o', title: 'Resgatados em Cristo Jesus - Pr. Diego Freitas', startTime: '991s' },
+    { id: 'dIKxUMmHZBU', title: 'Exortação à Fé - Pr. Diego Freitas' },
+    { id: '8rXf-H0Y6tw', title: 'Priorire o relacionamento - Pr. Diego Freitas', startTime: '1049s' },
+    { id: 'xjfmsHl3PL4', title: 'Responsabilidade na Revelação - Pr. Diego Freitas', startTime: '2s' },
+    { id: 'Oa50t6h_vmI', title: 'Jesus é a nossa páscoa - Pr. Diego Freitas' },
+    { id: '6_kRhqgNXqc', title: 'Uma vida na prática da palavra - Maria Rodrigues' },
+    { id: 'CXBUMw5ALgo', title: 'Buscando a vontade perfeita de Deus - Maria Rodrigues', startTime: '24s' },
+    { id: 'MgGlXJHX6dk', title: 'A alegria do Senhor, nos fortalece - Maria Rodrigues' },
+    { id: 'jS2PFaimI80', title: 'Alegre-se no sofrimento - Pr. Aramando Sena' },
+    { id: 'c07yGJkYyCw', title: 'O princípio da honra - Pr. Marcílio Lima' },
+    { id: 'QEAASMmuUOc', title: 'Movidos pela eternidade - Sandoval Filho', startTime: '361s' },
+    { id: 'edA8B-Jovao', title: 'Aprenda a usar sua Fé - Natan Rufino' }
+  ];
+
+  const serieUltimosDias = [
+    { id: '9cLdJbG4e7E', title: 'Parte I - Introdução a Série', startTime: '2437' },
+    { id: 'miabbanRU3U', title: 'Parte II - Estado intermediário dos mortos', startTime: '2998' },
+    { id: '-1e0s0hSLEA', title: 'Parte III - Estado intermediário dos mortos', startTime: '2788' },
+    { id: 'xpDVUkqeDg8', title: 'Parte IV - Ressurreição dos mortos', startTime: '3171' },
+    { id: 'mpy0GmXdMnM', title: 'Parte V - Ressurreição dos mortos' },
+    { id: 'vnaeYd7d58s', title: 'Parte VI - Ressurreição dos mortos' },
+    { id: '35F2410G0Wg', title: 'Parte VII' },
+    { id: 'xjfmsHl3PL4', title: 'Parte VIII - Responsabilidade na Revelação' },
+    { id: '35F2410G0Wg', title: 'Parte IX' },
+    { id: '6vJ6F9lDdR4', title: 'Parte X', startTime: '3415' },
+    { id: '9ftckdfNfw0', title: 'Parte XI', startTime: '2427' }
+  ];
 
   // Busca vídeos reais do canal @dunamystv usando YouTube Data API v3
   const fetchYouTubeVideos = async () => {
@@ -79,6 +115,8 @@ const DunamysTVPage = () => {
 
   useEffect(() => {
     fetchYouTubeVideos();
+    // Scroll para o topo quando a página carrega
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   useEffect(() => {
@@ -104,6 +142,26 @@ const DunamysTVPage = () => {
       setCarouselStartIndex(Math.max(0, carouselStartIndex - 1));
     } else {
       setCarouselStartIndex(Math.min(maxIndex, carouselStartIndex + 1));
+    }
+  };
+
+  const scrollMinistracaoCarousel = (direction) => {
+    if (direction === 'left') {
+      setMinistracaoStartIndex(Math.max(0, ministracaoStartIndex - 4));
+    } else {
+      const nextIndex = ministracaoStartIndex + 4;
+      // Para 16 itens: máximo deve ser 12 (mostra itens 12,13,14,15)
+      const maxStartIndex = Math.max(0, ministracoes.length - 4);
+      setMinistracaoStartIndex(Math.min(maxStartIndex, nextIndex));
+    }
+  };
+
+  const scrollSerieCarousel = (direction) => {
+    const maxIndex = Math.max(0, serieUltimosDias.length - 4);
+    if (direction === 'left') {
+      setSerieStartIndex(Math.max(0, serieStartIndex - 4));
+    } else {
+      setSerieStartIndex(Math.min(maxIndex, serieStartIndex + 4));
     }
   };
 
@@ -288,34 +346,147 @@ const DunamysTVPage = () => {
         </div>
       )}
 
+      {/* Ministrações Carousel */}
+      <div className="py-8 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-bold text-white">Ministrações</h3>
+          </div>
+
+          <div className="relative">
+            <button
+              onClick={() => scrollMinistracaoCarousel('left')}
+              disabled={ministracaoStartIndex === 0}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 disabled:opacity-30 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex items-center justify-center text-white opacity-70 hover:opacity-100 hover:scale-110"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            <button
+              onClick={() => scrollMinistracaoCarousel('right')}
+              disabled={ministracaoStartIndex >= ministracoes.length - 4}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 disabled:opacity-30 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex items-center justify-center text-white opacity-70 hover:opacity-100 hover:scale-110"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {ministracoes.slice(ministracaoStartIndex, ministracaoStartIndex + 4).map((video, index) => (
+                <div 
+                  key={`${video.id}-${video.startTime || 'default'}-${index}`}
+                  onClick={() => handleVideoSelect(video)}
+                  className={`bg-gray-800 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-xl ${
+                    selectedVideo?.id === video.id ? 'ring-2' : ''
+                  }`}
+                  style={selectedVideo?.id === video.id ? {'--tw-ring-color': '#8B9A3D'} : {}}
+                >
+                  <div className="relative">
+                    <img
+                      src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                      alt={video.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs max-w-[calc(100%-1rem)] truncate">
+                      {video.title}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Série Últimos Dias Carousel */}
+      <div className="py-8 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-bold text-white">Série Últimos Dias</h3>
+          </div>
+
+          <div className="relative">
+            <button
+              onClick={() => scrollSerieCarousel('left')}
+              disabled={serieStartIndex === 0}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 disabled:opacity-30 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex items-center justify-center text-white opacity-70 hover:opacity-100 hover:scale-110"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            <button
+              onClick={() => scrollSerieCarousel('right')}
+              disabled={serieStartIndex >= serieUltimosDias.length - 4}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 disabled:opacity-30 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex items-center justify-center text-white opacity-70 hover:opacity-100 hover:scale-110"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {serieUltimosDias.slice(serieStartIndex, serieStartIndex + 4).map((video) => (
+                <div 
+                  key={`${video.id}-${video.startTime || 'default'}`}
+                  onClick={() => handleVideoSelect(video)}
+                  className={`bg-gray-800 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-xl ${
+                    selectedVideo?.id === video.id ? 'ring-2' : ''
+                  }`}
+                  style={selectedVideo?.id === video.id ? {'--tw-ring-color': '#8B9A3D'} : {}}
+                >
+                  <div className="relative">
+                    <img
+                      src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                      alt={video.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs max-w-[calc(100%-1rem)] truncate">
+                      {video.title}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Video Carousel */}
       <div className="py-8 bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-bold text-white">Mais Vídeos do Canal</h3>
-            <div className="flex space-x-2">
-              <button 
-                onClick={() => scrollCarousel('left')}
-                disabled={carouselStartIndex === 0}
-                className="p-2 bg-gray-800 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button 
-                onClick={() => scrollCarousel('right')}
-                disabled={carouselStartIndex >= videos.length - 4}
-                className="p-2 bg-gray-800 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="relative">
+            {/* Setas posicionadas sobre o carrossel */}
+            <button
+              onClick={() => scrollCarousel('left')}
+              disabled={carouselStartIndex === 0}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 disabled:opacity-30 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex items-center justify-center text-white opacity-70 hover:opacity-100 hover:scale-110"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            <button
+              onClick={() => scrollCarousel('right')}
+              disabled={carouselStartIndex >= videos.length - 4}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 disabled:opacity-30 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex items-center justify-center text-white opacity-70 hover:opacity-100 hover:scale-110"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* Grid dos vídeos */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {visibleVideos.map((video) => (
               <div 
                 key={video.id}
@@ -355,6 +526,7 @@ const DunamysTVPage = () => {
                 </div>
               </div>
             ))}
+            </div>
           </div>
         </div>
       </div>
