@@ -13,16 +13,24 @@ const Home = () => {
       <DunamysTV />
       
       {/* About Section */}
-      <section className="section-padding bg-gray-100">
+       <section className="section-padding bg-gray-100">
         <div className="container-max">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Sobre o Ministério Dunamys
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Somos um ministério dedicado a transformar vidas através do poder de Deus, 
-              espalhando o evangelho da fé e prosperidade por todo o mundo.
+            
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
+              Somos uma Comunidade Cristã que cremos! <strong className="text-gray-800">Impossibilidades</strong> se tornam possibilidades pela <strong className="text-gray-800">Fé</strong>. É fato, tudo é possível para aquele que crê!
             </p>
+
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
+              <strong className="text-gray-800">DUNAMYS</strong> é a palavra grega descrita em Atos, cujo significado é <strong className="text-gray-800">PODER</strong>.
+            </p>
+            
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+              Temos a <strong className="text-gray-800">MISSÃO</strong> de <strong className="text-gray-800">SERVIR</strong> a Deus e as pessoas através dos ensinamentos de Cristo, <strong className="text-gray-800">TREINANDO</strong> líderes aptos a <strong className="text-gray-800">PROPAGAR</strong> o poderoso Evangelho!
+            </p>         
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -64,6 +72,17 @@ const Home = () => {
                 manifestado em nossas vidas.
               </p>
             </div>
+          </div>
+
+          {/* Botão Valores e Crenças */}
+          <div className="text-center mt-12">
+            <a
+              href="http://127.0.0.1:5173/ministerio/missao-valores"
+              className="inline-block text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-colors duration-200 shadow-lg"
+              style={{backgroundColor: '#8B9A3D'}}
+            >
+              Valores e Crenças
+            </a>
           </div>
         </div>
       </section>
@@ -124,6 +143,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      
     </>
   );
 };

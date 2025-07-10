@@ -14,26 +14,25 @@ const Header = () => {
   // Navegação com dropdowns específicos
   const navigation = [
     { name: 'Início', href: '/' },
-    { name: 'Sobre', href: '/sobre' },
     { 
       name: 'Ministério', 
       href: '/ministerio',
       dropdown: [
-        { name: 'Quem somos?', href: '/ministerio/quem-somos' },
+        { name: 'Missão e Valores?', href: '/ministerio/missao-valores' },
         { name: 'Doações', href: '/ministerio/doacoes' }
       ]
     },
-    { name: 'DunamysTV', href: '/dunamystv' },
-    { name: 'Mensagens', href: '/mensagens' },
-    { name: 'Eventos', href: '/eventos' },
-    { name: 'Blog', href: '/blog' },
     { 
       name: 'Igrejas', 
       href: '/igrejas',
       dropdown: [
-        { name: 'Endereços', href: '/igrejas/enderecos' }
+        { name: 'Endereços', href: '/igrejas/enderecos' },
+        { name: 'Reuniões', href: '/igrejas/reunioes' }
       ]
     },
+    { name: 'DunamysTV', href: '/dunamystv' },
+    { name: 'Devocional', href: '/devocional' },
+    { name: 'Eventos', href: '/eventos' },
     { 
       name: 'Escolas', 
       href: '/escolas',
@@ -41,7 +40,7 @@ const Header = () => {
         { name: 'Super Classe', href: '/escolas/super-classe' }
       ]
     },
-    { name: 'Contato', href: '/contato' }
+    { name: 'Área de Membro', href: '/membro' }
   ];
 
   // Fecha dropdown quando clica fora
@@ -97,7 +96,7 @@ const Header = () => {
   return (
     <header className="bg-black shadow-lg sticky top-0 z-50">
       <div className="container-max">
-        <div className="flex items-center justify-center py-4">
+        <div className="flex items-center justify-center py-1">
           {/* Logo */}
           <div className="flex items-center mr-8">
             <Link to="/" className="flex items-center">
