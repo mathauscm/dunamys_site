@@ -124,7 +124,7 @@ const Header = () => {
                   >
                     <button
                       onClick={() => toggleDropdown(item.name)}
-                      className="flex items-center text-white hover:text-green-400 transition-all duration-200 font-medium hover:scale-105"
+                      className="flex items-center text-white hover:text-dunamys-700 transition-all duration-200 font-medium hover:scale-105"
                     >
                       {item.name}
                       <svg 
@@ -150,7 +150,7 @@ const Header = () => {
                           <Link
                             key={dropdownItem.name}
                             to={dropdownItem.href}
-                            className="block px-4 py-2 text-white hover:bg-gray-800 hover:text-green-400 transition-colors duration-200 whitespace-nowrap"
+                            className="block px-4 py-2 text-white hover:bg-gray-800 hover:text-dunamys-700 transition-colors duration-200 whitespace-nowrap"
                             onClick={() => {
                               setActiveDropdown(null);
                               setIsMenuOpen(false);
@@ -171,7 +171,7 @@ const Header = () => {
                   // Item normal sem dropdown
                   <Link
                     to={item.href}
-                    className="text-white hover:text-green-400 transition-all duration-200 font-medium hover:scale-105"
+                    className="text-white hover:text-dunamys-700 transition-all duration-200 font-medium hover:scale-105"
                   >
                     {item.name}
                   </Link>
@@ -221,7 +221,7 @@ const Header = () => {
                     <div>
                       <button
                         onClick={() => toggleDropdown(item.name)}
-                        className="flex items-center justify-between w-full text-white hover:text-green-400 transition-all duration-200 font-medium py-2"
+                        className="flex items-center justify-between w-full text-white hover:text-dunamys-700 transition-all duration-200 font-medium py-2"
                       >
                         <span>{item.name}</span>
                         <svg 
@@ -243,7 +243,7 @@ const Header = () => {
                             <Link
                               key={dropdownItem.name}
                               to={dropdownItem.href}
-                              className="block text-gray-300 hover:text-green-400 transition-colors duration-200 py-1 px-2"
+                              className="block text-gray-300 hover:text-dunamys-700 transition-colors duration-200 py-1 px-2"
                               onClick={() => {
                                 setActiveDropdown(null);
                                 setIsMenuOpen(false);
@@ -263,7 +263,7 @@ const Header = () => {
                     // Item normal no mobile
                     <Link
                       to={item.href}
-                      className="text-white hover:text-green-400 transition-all duration-200 font-medium py-2 hover:scale-105"
+                      className="text-white hover:text-dunamys-700 transition-all duration-200 font-medium py-2 hover:scale-105"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}

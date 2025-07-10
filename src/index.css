@@ -43,6 +43,22 @@
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-dunamys-700 to-dunamys-900 bg-clip-text text-transparent;
   }
+}
+
+@layer utilities {
+  .animate-carousel {
+    animation: carousel 15s infinite;
+  }
+}
+
+@keyframes carousel {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(0); }
+  33.33% { transform: translateX(-100%); }
+  58.33% { transform: translateX(-100%); }
+  66.66% { transform: translateX(-200%); }
+  91.66% { transform: translateX(-200%); }
+  100% { transform: translateX(0); }
 }

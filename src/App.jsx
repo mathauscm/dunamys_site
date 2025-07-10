@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout/MainLayout.jsx';
 import Home from './pages/Home/Home.jsx';
 import DunamysTVPage from './pages/DunamysTV/DunamysTV.jsx';
+import MissaoValores from './pages/MissaoValores/MissaoValores.jsx';
+import Doacoes from './pages/Doacoes/Doacoes.jsx';
 
 /**
  * Main App Component
@@ -15,6 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dunamystv" element={<DunamysTVPage />} />
+          <Route path="/ministerio/missao-valores" element={<MissaoValores />} />
+          <Route path="/ministerio/doacoes" element={<Doacoes />} />
         </Routes>
       </MainLayout>
     </Router>

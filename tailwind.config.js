@@ -31,6 +31,18 @@ export default {
           800: '#1e40af',
           900: '#1e3a8a',
         },
+        dunamys: {
+          50: '#f8f9f5',
+          100: '#f0f2e9',
+          200: '#dde2c8',
+          300: '#c5ce9e',
+          400: '#aab76f',
+          500: '#92a24a',
+          600: '#7a8b36',
+          700: '#60702a',
+          800: '#4f5b24',
+          900: '#2c330f',
+        },
       },
       fontFamily: {
         'primary': ['Inter', 'sans-serif'],
