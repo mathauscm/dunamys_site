@@ -17,9 +17,9 @@ const MissaoValores = () => {
               </h1>
               
               <div className="bg-gradient-to-r from-dunamys-700 to-dunamys-900 p-8 rounded-lg mb-8 transform hover:scale-105 transition-transform duration-300">
-                <p className="text-black font-bold text-lg leading-relaxed">
-                  IMPLANTAR E PROMOVER o Reino de Deus, CULTIVANDO os valores do Céu, 
-                  DISCIPULANDO Líderes aptos a PROPAGAR e VIVER a Palavra da fé...
+                <p className="text-white font-bold text-lg leading-relaxed">
+                  Implantar e promover o Reino de Deus, cultivanto os valores do Céu, 
+                  discipulando Líderes aptos a propagar e viver a Palavra da fé...
                 </p>
               </div>
               
@@ -111,7 +111,7 @@ const MissaoValores = () => {
             ].map((belief, index) => (
               <div key={index} className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-dunamys-700 to-dunamys-900 rounded-lg blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
-                <div className="relative bg-gray-900 border border-gray-700 rounded-lg p-6 h-full hover:border-dunamys-600 transition-colors duration-300">
+                <div className="relative bg-gray-900 border border-gray-700 rounded-lg p-6 h-full hover:border-dunamys-600 transition-all duration-300 transform hover:scale-105">
                   <h3 className="text-lg font-bold text-dunamys-400 mb-4">{belief.title}</h3>
                   <p className="text-gray-300 mb-4 text-sm leading-relaxed">{belief.content}</p>
                   <p className="text-dunamys-400 text-xs font-semibold">{belief.verses}</p>

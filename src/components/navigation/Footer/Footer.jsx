@@ -14,15 +14,13 @@ const Footer = () => {
         { name: 'Sobre Nós', href: '/sobre' },
         { name: 'Visão e Missão', href: '/visao-missao' },
         { name: 'Liderança', href: '/lideranca' },
-        { name: 'História', href: '/historia' }
       ]
     },
     eventos: {
       title: 'Eventos',
       links: [
         { name: 'Próximos Eventos', href: '/eventos' },
-        { name: 'Conferências', href: '/conferencias' },
-        { name: 'Workshops', href: '/workshops' },
+        { name: 'Escola', href: '/super-classe' },
         { name: 'Cultos', href: '/cultos' }
       ]
     },
@@ -31,8 +29,6 @@ const Footer = () => {
       links: [
         { name: 'Fale Conosco', href: '/contato' },
         { name: 'Localização', href: '/localizacao' },
-        { name: 'Oração', href: '/oracao' },
-        { name: 'Apoio', href: '/apoio' }
       ]
     }
   };
@@ -69,15 +65,15 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="container-max section-padding">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Logo and Description */}
           <div className="lg:col-span-1">
             <div className="mb-4">
               <h3 className="text-2xl font-bold text-gradient">Dunamys</h3>
             </div>
             <p className="text-gray-300 mb-6">
-              Transformando vidas através do poder de Deus. Junte-se a nós em nossa jornada de fé, crescimento espiritual e serviço ao próximo.
+              Transformando vidas através do poder de Deus. Junte-se a nós em nossa jornada de fé
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
@@ -113,7 +109,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col lg:flex-row justify-between items-center">
+        <div className="mt-4 pt-4 border-t border-gray-800 flex flex-col lg:flex-row justify-between items-center">
           <p className="text-gray-300 text-sm">
             © {currentYear} Comunidade Cristã Dunamys. Todos os direitos reservados.
           </p>

@@ -122,28 +122,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="section-padding bg-gray-800 text-white">
-        <div className="container-max text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Pronto para Transformar sua Vida?
-          </h2>
-          <p className="text-xl mb-8 opacity-90">
-            Junte-se a nossa comunidade e experimente o poder transformador de Deus em sua vida.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-colors duration-200" style={{backgroundColor: '#8B9A3D'}}>
-              Participar dos Eventos
-            </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-gray-800 transition-colors duration-200">
-              Falar Conosco
-            </button>
-          </div>
-        </div>
-      </section>
-      
+      </section>      
     </>
   );
 };

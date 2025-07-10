@@ -34,8 +34,8 @@ const Header = () => {
     { name: 'Devocional', href: '/devocional' },
     { name: 'Eventos', href: '/eventos' },
     { 
-      name: 'Escolas', 
-      href: '/escolas',
+      name: 'Escola', 
+      href: '/escola',
       dropdown: [
         { name: 'Super Classe', href: '/escolas/super-classe' }
       ]
