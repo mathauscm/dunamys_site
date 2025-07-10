@@ -25,7 +25,6 @@ const DunamysTVPage = () => {
     { id: 'LiKrDiPq68o', title: 'Resgatados em Cristo Jesus - Pr. Diego Freitas', startTime: '991s' },
     { id: 'dIKxUMmHZBU', title: 'Exortação à Fé - Pr. Diego Freitas' },
     { id: '8rXf-H0Y6tw', title: 'Priorire o relacionamento - Pr. Diego Freitas', startTime: '1049s' },
-    { id: 'xjfmsHl3PL4', title: 'Responsabilidade na Revelação - Pr. Diego Freitas', startTime: '2s' },
     { id: 'Oa50t6h_vmI', title: 'Jesus é a nossa páscoa - Pr. Diego Freitas' },
     { id: '6_kRhqgNXqc', title: 'Uma vida na prática da palavra - Maria Rodrigues' },
     { id: 'CXBUMw5ALgo', title: 'Buscando a vontade perfeita de Deus - Maria Rodrigues', startTime: '24s' },
@@ -139,9 +138,9 @@ const DunamysTVPage = () => {
   const scrollCarousel = (direction) => {
     const maxIndex = Math.max(0, videos.length - 4);
     if (direction === 'left') {
-      setCarouselStartIndex(Math.max(0, carouselStartIndex - 1));
+      setCarouselStartIndex(Math.max(0, carouselStartIndex - 4));
     } else {
-      setCarouselStartIndex(Math.min(maxIndex, carouselStartIndex + 1));
+      setCarouselStartIndex(Math.min(maxIndex, carouselStartIndex + 4));
     }
   };
 
@@ -397,6 +396,21 @@ const DunamysTVPage = () => {
                 </div>
               ))}
             </div>
+
+            {/* Indicadores de página */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {Array.from({ length: Math.ceil(ministracoes.length / 4) }).map((_, pageIndex) => (
+                <button
+                  key={pageIndex}
+                  onClick={() => setMinistracaoStartIndex(pageIndex * 4)}
+                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                    Math.floor(ministracaoStartIndex / 4) === pageIndex
+                      ? 'bg-white'
+                      : 'bg-gray-600 hover:bg-gray-400'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -452,12 +466,27 @@ const DunamysTVPage = () => {
                 </div>
               ))}
             </div>
+
+            {/* Indicadores de página */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {Array.from({ length: Math.ceil(serieUltimosDias.length / 4) }).map((_, pageIndex) => (
+                <button
+                  key={pageIndex}
+                  onClick={() => setSerieStartIndex(pageIndex * 4)}
+                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                    Math.floor(serieStartIndex / 4) === pageIndex
+                      ? 'bg-white'
+                      : 'bg-gray-600 hover:bg-gray-400'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Video Carousel */}
-      <div className="py-8 bg-gray-900">
+      <div className="py-8 pb-16 bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-bold text-white">Mais Vídeos do Canal</h3>
@@ -526,6 +555,21 @@ const DunamysTVPage = () => {
                 </div>
               </div>
             ))}
+            </div>
+
+            {/* Indicadores de página */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {Array.from({ length: Math.ceil(videos.length / 4) }).map((_, pageIndex) => (
+                <button
+                  key={pageIndex}
+                  onClick={() => setCarouselStartIndex(pageIndex * 4)}
+                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                    Math.floor(carouselStartIndex / 4) === pageIndex
+                      ? 'bg-white'
+                      : 'bg-gray-600 hover:bg-gray-400'
+                  }`}
+                />
+              ))}
             </div>
           </div>
         </div>
