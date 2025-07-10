@@ -7,19 +7,44 @@ import Button from '../../common/Button/Button.jsx';
  */
 const Hero = () => {
   return (
-    <section className="relative bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 text-white overflow-hidden">
+    <section 
+      className="relative text-white overflow-hidden min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: 'url(/background.jpg)',
+        backgroundSize: '100%',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Overlay escuro para melhor legibilidade */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-white/10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
       </div>
 
-      <div className="container-max relative">
+      <div className="container-max relative z-10">
         <div className="flex flex-col lg:flex-row items-center min-h-screen py-20">
           {/* Content */}
-          <div className="lg:w-1/2 lg:pr-12 text-center lg:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-fade-in">
-              Transformando Vidas com o{' '}
-              <span className="text-yellow-300">Poder de Deus</span>
+          <div className="lg:w-1/2 lg:pr-12 text-left">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in">
+              <span 
+                className="inline-block italic font-black"
+                style={{
+                  fontFamily: 'Arial Black, sans-serif',
+                  fontSize: 'clamp(3rem, 8vw, 7rem)',
+                  fontWeight: '900',
+                  fontStyle: 'italic',
+                  color: 'transparent',
+                  WebkitTextStroke: '2px white',
+                  letterSpacing: '-0.07em',
+                  transform: 'perspective(900px) rotateX(15deg)',
+                  marginTop: '-50rem'
+                }}
+              >
+                DUNAMYS
+              </span>
             </h1>
             
             <p className="text-xl md:text-2xl mb-8 opacity-90 animate-slide-up">
@@ -52,6 +77,36 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* CSS personalizado para animação flutuante */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% {
+            transform: perspective(500px) rotateX(15deg) translateY(0px);
+          }
+          50% {
+            transform: perspective(500px) rotateX(15deg) translateY(-10px);
+          }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out;
+        }
+        
+        .animate-slide-up {
+          animation: slideUp 0.8s ease-out 0.2s both;
+        }
+      `}</style>
     </section>
   );
 };
