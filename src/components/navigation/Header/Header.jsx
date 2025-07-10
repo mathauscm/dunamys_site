@@ -1,63 +1,189 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../../common/Button/Button.jsx';
 
 /**
  * Header Component
- * Main navigation header
+ * Main navigation header with specific dropdowns
  */
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [dropdownTimeout, setDropdownTimeout] = useState(null);
+  const dropdownRefs = useRef({});
 
+  // Navegação com dropdowns específicos
   const navigation = [
     { name: 'Início', href: '/' },
     { name: 'Sobre', href: '/sobre' },
-    { name: 'Ministério', href: '/ministerio' },
+    { 
+      name: 'Ministério', 
+      href: '/ministerio',
+      dropdown: [
+        { name: 'Quem somos?', href: '/ministerio/quem-somos' },
+        { name: 'Doações', href: '/ministerio/doacoes' }
+      ]
+    },
     { name: 'DunamysTV', href: '/dunamystv' },
     { name: 'Mensagens', href: '/mensagens' },
     { name: 'Eventos', href: '/eventos' },
     { name: 'Blog', href: '/blog' },
+    { 
+      name: 'Igrejas', 
+      href: '/igrejas',
+      dropdown: [
+        { name: 'Endereços', href: '/igrejas/enderecos' }
+      ]
+    },
+    { 
+      name: 'Escolas', 
+      href: '/escolas',
+      dropdown: [
+        { name: 'Super Classe', href: '/escolas/super-classe' }
+      ]
+    },
     { name: 'Contato', href: '/contato' }
   ];
+
+  // Fecha dropdown quando clica fora
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (activeDropdown && dropdownRefs.current[activeDropdown]) {
+        if (!dropdownRefs.current[activeDropdown].contains(event.target)) {
+          setActiveDropdown(null);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [activeDropdown]);
+
+  const toggleDropdown = (itemName) => {
+    // Limpa qualquer timeout pendente
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    
+    setActiveDropdown(activeDropdown === itemName ? null : itemName);
+  };
+
+  const handleMouseEnter = (itemName) => {
+    // Limpa qualquer timeout pendente
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    
+    if (navigation.find(item => item.name === itemName)?.dropdown) {
+      setActiveDropdown(itemName);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    // Limpa timeout anterior se existir
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+    }
+    
+    // Delay mais longo para permitir mover o mouse
+    const timeout = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 500);
+    
+    setDropdownTimeout(timeout);
+  };
 
   return (
     <header className="bg-black shadow-lg sticky top-0 z-50">
       <div className="container-max">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex items-center justify-center py-4">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center mr-8">
             <Link to="/" className="flex items-center">
               <img 
                 src="/logoprincipal.jpg" 
                 alt="Dunamys" 
-                className="h-12 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Próximo ao logo */}
           <nav className="hidden md:flex space-x-8">
             {navigation.map((item) => (
-              <Link
+              <div 
                 key={item.name}
-                to={item.href}
-                className="text-white hover:text-green-400 transition-all duration-200 font-medium hover:scale-105"
+                className="relative"
+                ref={el => dropdownRefs.current[item.name] = el}
               >
-                {item.name}
-              </Link>
+                {item.dropdown ? (
+                  // Item com dropdown
+                  <div 
+                    onMouseEnter={() => handleMouseEnter(item.name)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <button
+                      onClick={() => toggleDropdown(item.name)}
+                      className="flex items-center text-white hover:text-green-400 transition-all duration-200 font-medium hover:scale-105"
+                    >
+                      {item.name}
+                      <svg 
+                        className={`ml-1 h-4 w-4 transition-transform duration-200 ${
+                          activeDropdown === item.name ? 'rotate-180' : ''
+                        }`}
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    
+                    {/* Dropdown Menu */}
+                    {activeDropdown === item.name && (
+                      <div 
+                        className="absolute top-full left-0 mt-1 min-w-max bg-black rounded-lg shadow-xl py-2 z-50"
+                        onMouseEnter={() => handleMouseEnter(item.name)}
+                        onMouseLeave={handleMouseLeave}
+                      >
+                        {item.dropdown.map((dropdownItem) => (
+                          <Link
+                            key={dropdownItem.name}
+                            to={dropdownItem.href}
+                            className="block px-4 py-2 text-white hover:bg-gray-800 hover:text-green-400 transition-colors duration-200 whitespace-nowrap"
+                            onClick={() => {
+                              setActiveDropdown(null);
+                              setIsMenuOpen(false);
+                              // Limpa timeout se existir
+                              if (dropdownTimeout) {
+                                clearTimeout(dropdownTimeout);
+                                setDropdownTimeout(null);
+                              }
+                            }}
+                          >
+                            {dropdownItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  // Item normal sem dropdown
+                  <Link
+                    to={item.href}
+                    className="text-white hover:text-green-400 transition-all duration-200 font-medium hover:scale-105"
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </div>
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <button className="text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 hover:opacity-90" style={{backgroundColor: '#8B9A3D'}}>
-              Participe
-            </button>
-          </div>
-
-          {/* Mobile menu button */}
+          {/* Mobile menu button - Posicionado absolutamente */}
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-gray-800 transition-colors text-white"
+            className="md:hidden absolute right-4 p-2 rounded-lg hover:bg-gray-800 transition-colors text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg
@@ -90,20 +216,62 @@ const Header = () => {
           <div className="md:hidden py-4 border-t border-gray-700">
             <nav className="flex flex-col space-y-4">
               {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="text-white hover:text-green-400 transition-all duration-200 font-medium py-2 hover:scale-105"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
+                <div key={item.name}>
+                  {item.dropdown ? (
+                    // Item com dropdown no mobile
+                    <div>
+                      <button
+                        onClick={() => toggleDropdown(item.name)}
+                        className="flex items-center justify-between w-full text-white hover:text-green-400 transition-all duration-200 font-medium py-2"
+                      >
+                        <span>{item.name}</span>
+                        <svg 
+                          className={`h-4 w-4 transition-transform duration-200 ${
+                            activeDropdown === item.name ? 'rotate-180' : ''
+                          }`}
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      
+                      {/* Dropdown items no mobile */}
+                      {activeDropdown === item.name && (
+                        <div className="mt-2 pl-4 space-y-2 bg-gray-800 rounded-lg py-2 mx-2">
+                          {item.dropdown.map((dropdownItem) => (
+                            <Link
+                              key={dropdownItem.name}
+                              to={dropdownItem.href}
+                              className="block text-gray-300 hover:text-green-400 transition-colors duration-200 py-1 px-2"
+                              onClick={() => {
+                                setActiveDropdown(null);
+                                setIsMenuOpen(false);
+                                if (dropdownTimeout) {
+                                  clearTimeout(dropdownTimeout);
+                                  setDropdownTimeout(null);
+                                }
+                              }}
+                            >
+                              {dropdownItem.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    // Item normal no mobile
+                    <Link
+                      to={item.href}
+                      className="text-white hover:text-green-400 transition-all duration-200 font-medium py-2 hover:scale-105"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
               ))}
-              <div className="pt-4">
-                <button className="w-full text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 hover:opacity-90" style={{backgroundColor: '#8B9A3D'}}>
-                  Participe
-                </button>
-              </div>
             </nav>
           </div>
         )}

@@ -112,32 +112,10 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Newsletter Signup */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <div className="flex flex-col lg:flex-row justify-between items-center">
-            <div className="mb-4 lg:mb-0">
-              <h4 className="text-lg font-semibold mb-2">Receba nossas atualizações</h4>
-              <p className="text-gray-300">
-                Inscreva-se para receber mensagens inspiradoras e notícias sobre nossos eventos.
-              </p>
-            </div>
-            <div className="flex w-full lg:w-auto">
-              <input
-                type="email"
-                placeholder="Seu e-mail"
-                className="flex-1 lg:w-80 px-4 py-2 rounded-l-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-              <button className="px-6 py-2 text-white rounded-r-lg transition-colors duration-200 hover:opacity-90" style={{backgroundColor: '#8B9A3D'}}>
-                Inscrever
-              </button>
-            </div>
-          </div>
-        </div>
-
         {/* Bottom Bar */}
         <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col lg:flex-row justify-between items-center">
           <p className="text-gray-300 text-sm">
-            © {currentYear} Dunamys. Todos os direitos reservados.
+            © {currentYear} Comunidade Cristã Dunamys. Todos os direitos reservados.
           </p>
           <div className="flex space-x-6 mt-4 lg:mt-0">
             <a href="/privacidade" className="text-gray-300 hover:text-white text-sm transition-colors duration-200">
