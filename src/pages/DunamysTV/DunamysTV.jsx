@@ -50,13 +50,13 @@ const DunamysTVPage = () => {
       // Combina os dados
       const processedVideos = videosData.items.map((video) => {
         const details = detailsData.items.find(detail => detail.id === video.id.videoId);
-        
+
         return {
           id: video.id.videoId,
           title: video.snippet.title,
           description: video.snippet.description,
-          thumbnail: video.snippet.thumbnails.maxresdefault?.url || 
-                    video.snippet.thumbnails.high?.url || 
+          thumbnail: video.snippet.thumbnails.maxresdefault?.url ||
+                    video.snippet.thumbnails.high?.url ||
                     video.snippet.thumbnails.medium?.url,
           channelTitle: video.snippet.channelTitle,
           publishedAt: video.snippet.publishedAt,
@@ -84,7 +84,7 @@ const DunamysTVPage = () => {
   useEffect(() => {
     // Verifica se há um vídeo específico na URL
     const videoId = searchParams.get('v');
-    
+
     if (videoId && videos.length > 0) {
       const video = videos.find(v => v.id === videoId);
       if (video) {
@@ -109,15 +109,15 @@ const DunamysTVPage = () => {
 
   const formatDuration = (duration) => {
     if (!duration) return '';
-    
+
     // Converte duração ISO 8601 para formato legível
     const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
     if (!match) return '';
-    
+
     const hours = parseInt(match[1]) || 0;
     const minutes = parseInt(match[2]) || 0;
     const seconds = parseInt(match[3]) || 0;
-    
+
     if (hours > 0) {
       return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
@@ -181,19 +181,15 @@ const DunamysTVPage = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 py-8">
+      <div className="bg-gray-900 py-8">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl flex items-center justify-center shadow-lg">
-                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
-              <div>
-                <h1 className="text-4xl font-bold text-white">Dunamys TV</h1>
-                <p className="text-gray-200 text-lg">Canal Oficial | Transformando vidas através da Palavra</p>
-              </div>
+            <div className="flex items-center">
+              <img
+                src="/dunamystv2.png"
+                alt="Dunamys TV"
+                className="h-16 drop-shadow-lg"
+              />
             </div>
           </div>
         </div>
@@ -201,7 +197,8 @@ const DunamysTVPage = () => {
 
       {/* Featured Video Section */}
       {selectedVideo && (
-        <div className="bg-gradient-to-b from-gray-800 to-gray-900 py-8">
+        // CORRIGIDO: fundo igual ao restante, SEM o gradiente azul/azulado
+        <div className="bg-gray-900 py-8">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               {/* Video Player */}
@@ -213,7 +210,7 @@ const DunamysTVPage = () => {
                     className="absolute inset-0 w-full h-full"
                     allowFullScreen
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    frameBorder="0"
+                    style={{border: 'none'}}
                     onError={() => setVideoError(true)}
                   />
                 ) : (
