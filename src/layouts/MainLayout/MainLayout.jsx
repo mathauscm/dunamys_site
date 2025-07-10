@@ -1,5 +1,6 @@
 import React from 'react';
-import { Header, Footer } from '../../components/navigation';
+import Header from '../../components/navigation/Header/Header.jsx';
+import Footer from '../../components/navigation/Footer/Footer.jsx';
 
 /**
  * Main Layout Component

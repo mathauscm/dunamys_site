@@ -1,6 +1,8 @@
 import React from 'react';
-import { MainLayout } from './layouts';
-import { Home } from './pages';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainLayout from './layouts/MainLayout/MainLayout.jsx';
+import Home from './pages/Home/Home.jsx';
+import DunamysTVPage from './pages/DunamysTV/DunamysTV.jsx';
 
 /**
  * Main App Component
@@ -8,9 +10,14 @@ import { Home } from './pages';
  */
 function App() {
   return (
-    <MainLayout>
-      <Home />
-    </MainLayout>
+    <Router>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/dunamystv" element={<DunamysTVPage />} />
+        </Routes>
+      </MainLayout>
+    </Router>
   );
 }
 

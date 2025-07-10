@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
-const DunamysTV = () => {
-  const navigate = useNavigate();
+const DunamysTVPage = () => {
+  const [searchParams] = useSearchParams();
   const [videos, setVideos] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [carouselStartIndex, setCarouselStartIndex] = useState(0);
+  const [videoError, setVideoError] = useState(false);
 
   // Configuração da API do YouTube
   const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
@@ -65,6 +67,7 @@ const DunamysTV = () => {
       });
 
       setVideos(processedVideos);
+      setSelectedVideo(processedVideos[0]);
       setLoading(false);
 
     } catch (error) {
@@ -78,8 +81,21 @@ const DunamysTV = () => {
     fetchYouTubeVideos();
   }, []);
 
-  const handleVideoClick = (video) => {
-    navigate(`/dunamystv?v=${video.id}`);
+  useEffect(() => {
+    // Verifica se há um vídeo específico na URL
+    const videoId = searchParams.get('v');
+    
+    if (videoId && videos.length > 0) {
+      const video = videos.find(v => v.id === videoId);
+      if (video) {
+        setSelectedVideo(video);
+      }
+    }
+  }, [videos, searchParams]);
+
+  const handleVideoSelect = (video) => {
+    setSelectedVideo(video);
+    setVideoError(false);
   };
 
   const scrollCarousel = (direction) => {
@@ -183,12 +199,103 @@ const DunamysTV = () => {
         </div>
       </div>
 
+      {/* Featured Video Section */}
+      {selectedVideo && (
+        <div className="bg-gradient-to-b from-gray-800 to-gray-900 py-8">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              {/* Video Player */}
+              <div className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-2xl mb-6">
+                {!videoError ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${selectedVideo.id}?controls=1&rel=0&modestbranding=1&playsinline=1&fs=1&hl=pt-BR`}
+                    title={selectedVideo.title}
+                    className="absolute inset-0 w-full h-full"
+                    allowFullScreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    frameBorder="0"
+                    onError={() => setVideoError(true)}
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+                    <div className="text-center">
+                      <div className="text-red-500 text-6xl mb-4">📺</div>
+                      <h3 className="text-white text-xl font-bold mb-2">Erro ao carregar vídeo</h3>
+                      <p className="text-gray-300 mb-6">
+                        Ocorreu um problema ao carregar este vídeo. Tente assistir diretamente no YouTube.
+                      </p>
+                      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button 
+                          onClick={() => setVideoError(false)}
+                          className="text-white px-6 py-3 rounded-lg transition-colors hover:opacity-90"
+                          style={{backgroundColor: '#8B9A3D'}}
+                        >
+                          🔄 Tentar novamente
+                        </button>
+                        <a 
+                          href={`https://www.youtube.com/watch?v=${selectedVideo.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg transition-colors inline-flex items-center space-x-2"
+                        >
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                            <path fill="#fff" d="M9.545 15.568V8.432L15.818 12z"/>
+                          </svg>
+                          <span>Assistir no YouTube</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              {/* Video Info */}
+              <div className="bg-gray-800 rounded-xl p-6">
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
+                  <div className="flex-1">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                      {selectedVideo.title}
+                    </h2>
+                    <div className="flex flex-wrap items-center gap-4 mb-4 text-gray-300">
+                      <span className="flex items-center space-x-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <span>{formatViews(selectedVideo.viewCount)}</span>
+                      </span>
+                      <span className="flex items-center space-x-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{formatDuration(selectedVideo.duration)}</span>
+                      </span>
+                      <span className="flex items-center space-x-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span>{formatDate(selectedVideo.publishedAt)}</span>
+                      </span>
+                    </div>
+                    <p className="text-gray-300 leading-relaxed">
+                      {selectedVideo.description.length > 300 
+                        ? `${selectedVideo.description.substring(0, 300)}...` 
+                        : selectedVideo.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Video Carousel */}
       <div className="py-8 bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-bold text-white">Vídeos do Canal</h3>
+            <h3 className="text-2xl font-bold text-white">Mais Vídeos do Canal</h3>
             <div className="flex space-x-2">
               <button 
                 onClick={() => scrollCarousel('left')}
@@ -215,8 +322,11 @@ const DunamysTV = () => {
             {visibleVideos.map((video) => (
               <div 
                 key={video.id}
-                onClick={() => handleVideoClick(video)}
-                className="bg-gray-800 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-xl"
+                onClick={() => handleVideoSelect(video)}
+                className={`bg-gray-800 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-xl ${
+                  selectedVideo?.id === video.id ? 'ring-2' : ''
+                }`}
+                style={selectedVideo?.id === video.id ? {'--tw-ring-color': '#8B9A3D'} : {}}
               >
                 <div className="relative">
                   <img 
@@ -227,13 +337,15 @@ const DunamysTV = () => {
                   <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 rounded text-sm">
                     {formatDuration(video.duration)}
                   </div>
-                  <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 flex items-center justify-center transition-all duration-200">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200" style={{backgroundColor: '#8B9A3D'}}>
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z"/>
-                      </svg>
+                  {selectedVideo?.id === video.id && (
+                    <div className="absolute inset-0 bg-green-500 bg-opacity-20 flex items-center justify-center" style={{backgroundColor: 'rgba(139, 154, 61, 0.2)'}}>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{backgroundColor: '#8B9A3D'}}>
+                        <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 <div className="p-4">
                   <h4 className="text-white font-semibold mb-2 line-clamp-2 text-sm leading-tight">
@@ -253,4 +365,4 @@ const DunamysTV = () => {
   );
 };
 
-export default DunamysTV;
+export default DunamysTVPage;

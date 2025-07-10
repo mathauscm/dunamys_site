@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../common';
+import Button from '../../common/Button/Button.jsx';
 
 /**
  * Hero Section Component
@@ -7,7 +7,7 @@ import { Button } from '../../common';
  */
 const Hero = () => {
   return (
-    <section className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 text-white overflow-hidden">
+    <section className="relative bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 text-white overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-white/10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
@@ -26,38 +26,6 @@ const Hero = () => {
               Junte-se a nós em uma jornada de fé, crescimento espiritual e impacto no Reino de Deus.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slide-up">
-              <Button 
-                variant="secondary" 
-                size="large"
-                className="bg-white text-primary-600 hover:bg-gray-100"
-              >
-                Conheça Mais
-              </Button>
-              <Button 
-                variant="outline" 
-                size="large"
-                className="border-white text-white hover:bg-white hover:text-primary-600"
-              >
-                Participe dos Eventos
-              </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mt-12 animate-fade-in">
-              <div className="text-center lg:text-left">
-                <div className="text-3xl font-bold text-yellow-300">50+</div>
-                <div className="text-sm opacity-80">Países Alcançados</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-3xl font-bold text-yellow-300">100k+</div>
-                <div className="text-sm opacity-80">Vidas Transformadas</div>
-              </div>
-              <div className="text-center lg:text-left col-span-2 md:col-span-1">
-                <div className="text-3xl font-bold text-yellow-300">25+</div>
-                <div className="text-sm opacity-80">Anos de Ministério</div>
-              </div>
-            </div>
           </div>
 
           {/* Image/Visual */}
@@ -79,7 +47,7 @@ const Hero = () => {
               {/* Floating Elements */}
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-yellow-300 rounded-full opacity-20 animate-pulse"></div>
               <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-white rounded-full opacity-20 animate-pulse" style={{animationDelay: '1s'}}></div>
-              <div className="absolute top-1/2 -left-8 w-12 h-12 bg-secondary-300 rounded-full opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
+              <div className="absolute top-1/2 -left-8 w-12 h-12 bg-gray-400 rounded-full opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
             </div>
           </div>
         </div>

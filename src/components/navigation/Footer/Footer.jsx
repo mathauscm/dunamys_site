@@ -17,15 +17,6 @@ const Footer = () => {
         { name: 'História', href: '/historia' }
       ]
     },
-    recursos: {
-      title: 'Recursos',
-      links: [
-        { name: 'Mensagens', href: '/mensagens' },
-        { name: 'Blog', href: '/blog' },
-        { name: 'E-books', href: '/ebooks' },
-        { name: 'Estudos', href: '/estudos' }
-      ]
-    },
     eventos: {
       title: 'Eventos',
       links: [
@@ -134,9 +125,9 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Seu e-mail"
-                className="flex-1 lg:w-80 px-4 py-2 rounded-l-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="flex-1 lg:w-80 px-4 py-2 rounded-l-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
-              <button className="px-6 py-2 bg-primary-600 hover:bg-primary-700 rounded-r-lg transition-colors duration-200">
+              <button className="px-6 py-2 text-white rounded-r-lg transition-colors duration-200 hover:opacity-90" style={{backgroundColor: '#8B9A3D'}}>
                 Inscrever
               </button>
             </div>
