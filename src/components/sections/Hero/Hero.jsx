@@ -47,10 +47,44 @@ const Hero = () => {
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl mb-8 opacity-90 animate-slide-up">
-              Junte-se a nós em uma jornada de fé, crescimento espiritual e impacto no Reino de Deus.
-            </p>
-
+            {/* Texto com padrão uniforme */}
+            <div className="space-y-2 mb-10">
+              <p 
+                className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-widest opacity-95 animate-slide-up"
+                style={{
+                  fontFamily: 'Montserrat, "Helvetica Neue", sans-serif',
+                  fontWeight: '650',
+                  letterSpacing: '0.12em',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                }}
+              >
+                100
+              </p>
+              <p 
+                className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-widest opacity-95 animate-slide-up"
+                style={{
+                  fontFamily: 'Montserrat, "Helvetica Neue", sans-serif',
+                  fontWeight: '650',
+                  letterSpacing: '0.12em',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  animationDelay: '0.1s'
+                }}
+              >
+                COMPETIÇÃO
+              </p>
+              <p 
+                className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-widest opacity-95 animate-slide-up"
+                style={{
+                  fontFamily: 'Montserrat, "Helvetica Neue", sans-serif',
+                  fontWeight: '650',
+                  letterSpacing: '0.12em',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  animationDelay: '0.2s'
+                }}
+              >
+                100% COOPERAÇÃO
+              </p>
+            </div>
           </div>
 
           {/* Image/Visual */}
@@ -80,6 +114,8 @@ const Hero = () => {
 
       {/* CSS personalizado para animação flutuante */}
       <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap');
+        
         @keyframes float {
           0%, 100% {
             transform: perspective(500px) rotateX(15deg) translateY(0px);
