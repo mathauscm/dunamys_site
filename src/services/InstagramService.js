@@ -1,6 +1,6 @@
 /**
  * Instagram Service - Graph API
- * Configurado para conta de teste, preparado para @dunamys
+ * Configurado para buscar informações reais da conta Instagram
  */
 export class InstagramService {
   constructor() {
@@ -64,6 +64,35 @@ export class InstagramService {
   }
 
   /**
+   * Busca informações da conta (username, foto de perfil, etc.)
+   */
+  async getAccountInfo() {
+    try {
+      if (!this.accessToken) {
+        console.warn('❌ Token não configurado. Retornando dados de fallback.');
+        return this.getFallbackAccountInfo();
+      }
+
+      console.log('🔍 Buscando informações da conta...');
+      const response = await fetch(
+        `${this.baseURL}/me?fields=id,username,account_type,media_count,profile_picture_url&access_token=${this.accessToken}`
+      );
+
+      if (!response.ok) {
+        console.error('❌ Erro ao buscar info da conta:', response.status);
+        return this.getFallbackAccountInfo();
+      }
+
+      const data = await response.json();
+      console.log('✅ Info da conta:', data);
+      return data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar informações da conta:', error);
+      return this.getFallbackAccountInfo();
+    }
+  }
+
+  /**
    * Formata dados dos posts para o componente
    */
   formatPostsData(posts) {
@@ -91,9 +120,9 @@ export class InstagramService {
         mediaUrl: '/background.jpg',
         thumbnailUrl: '/background.jpg',
         mediaType: 'IMAGE',
-        caption: 'Culto de domingo na Dunamys! Experimentando o poder sobrenatural de Deus 🙏 #Dunamys #PoderDoAlto #Fe',
-        timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3h atrás
-        permalink: 'https://instagram.com/dunamys',
+        caption: 'DOMINGO NA DUNAMYS | CAMPUS TIANGUÁ E UBAJARA Algo poderoso está acontecendo... Vidas estão sendo transformadas, o céu está tocando a terra, e você não pode ficar de fora! ⚡ Chegue com sede. Saia marcado. 🔥 Deus está levantando uma geração cheia do Espírito! #DomingoNaDunamys #OAvivamentoComecou #JesusFoiAqui #Tianguá #Ubajara #VemPraDunamys',
+        timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+        permalink: 'https://instagram.com/dunamysibiapaba',
         formattedDate: '3h',
         isViewed: false
       },
@@ -102,9 +131,9 @@ export class InstagramService {
         mediaUrl: '/roll1.jpg',
         thumbnailUrl: '/roll1.jpg',
         mediaType: 'IMAGE',
-        caption: 'Unidos em oração e fé! A comunidade Dunamys se fortalece a cada dia 💪 #ComunidadeDunamys #Oracao',
-        timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), // 6h atrás
-        permalink: 'https://instagram.com/dunamys',
+        caption: 'Unidos em oração e fé! A comunidade Dunamys se fortalece a cada dia 💪 #ComunidadeDunamys #Oracao #Fe #PoderDoAlto',
+        timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
+        permalink: 'https://instagram.com/dunamysibiapaba',
         formattedDate: '6h',
         isViewed: false
       },
@@ -113,9 +142,9 @@ export class InstagramService {
         mediaUrl: '/roll2.jpg',
         thumbnailUrl: '/roll2.jpg',
         mediaType: 'IMAGE',
-        caption: 'Palavra de fé transformando vidas! "Tudo é possível para aquele que crê" ✨ #PalavraDeFe #Transformacao',
-        timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(), // 12h atrás
-        permalink: 'https://instagram.com/dunamys',
+        caption: 'Palavra de fé transformando vidas! "Tudo é possível para aquele que crê" ✨ #PalavraDeFe #Transformacao #Dunamys',
+        timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+        permalink: 'https://instagram.com/dunamysibiapaba',
         formattedDate: '12h',
         isViewed: false
       },
@@ -124,9 +153,9 @@ export class InstagramService {
         mediaUrl: '/uni.jpg',
         thumbnailUrl: '/uni.jpg',
         mediaType: 'IMAGE',
-        caption: 'Momento de louvor e adoração! O coração se alegra na presença do Senhor 🎵 #Louvor #Adoracao #Dunamys',
-        timestamp: new Date(Date.now() - 18 * 60 * 60 * 1000).toISOString(), // 18h atrás
-        permalink: 'https://instagram.com/dunamys',
+        caption: 'Momento de louvor e adoração! O coração se alegra na presença do Senhor 🎵 #Louvor #Adoracao #Dunamys #PresencaDeDeus',
+        timestamp: new Date(Date.now() - 18 * 60 * 60 * 1000).toISOString(),
+        permalink: 'https://instagram.com/dunamysibiapaba',
         formattedDate: '18h',
         isViewed: false
       }
@@ -134,9 +163,22 @@ export class InstagramService {
   }
 
   /**
+   * Informações de fallback da conta (mais realistas)
+   */
+  getFallbackAccountInfo() {
+    return {
+      id: 'dunamysibiapaba_instagram',
+      username: 'dunamysibiapaba',
+      account_type: 'BUSINESS',
+      media_count: 156,
+      profile_picture_url: '/logoprincipal.jpg'
+    };
+  }
+
+  /**
    * Trunca a caption para não ficar muito longa
    */
-  truncateCaption(caption, maxLength = 80) {
+  truncateCaption(caption, maxLength = 150) {
     if (caption.length <= maxLength) return caption;
     return caption.substring(0, maxLength).trim() + '...';
   }
@@ -191,46 +233,6 @@ export class InstagramService {
       console.error('❌ Erro ao validar token:', error);
       return false;
     }
-  }
-
-  /**
-   * Busca informações da conta (para debug)
-   */
-  async getAccountInfo() {
-    try {
-      if (!this.accessToken) {
-        return this.getFallbackAccountInfo();
-      }
-
-      console.log('🔍 Buscando informações da conta...');
-      const response = await fetch(
-        `${this.baseURL}/me?fields=id,username,account_type,media_count&access_token=${this.accessToken}`
-      );
-
-      if (!response.ok) {
-        console.error('❌ Erro ao buscar info da conta:', response.status);
-        return this.getFallbackAccountInfo();
-      }
-
-      const data = await response.json();
-      console.log('✅ Info da conta:', data);
-      return data;
-    } catch (error) {
-      console.error('❌ Erro ao buscar informações da conta:', error);
-      return this.getFallbackAccountInfo();
-    }
-  }
-
-  /**
-   * Informações de fallback da conta
-   */
-  getFallbackAccountInfo() {
-    return {
-      id: 'dunamys_test',
-      username: 'dunamys',
-      account_type: 'BUSINESS',
-      media_count: 156
-    };
   }
 
   /**
