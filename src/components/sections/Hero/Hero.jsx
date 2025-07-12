@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../../common/Button/Button.jsx';
+import InstagramFeed from '../InstagramFeed/InstagramFeed.jsx';
 
 /**
  * Hero Section Component
@@ -87,21 +88,11 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Image/Visual */}
+          {/* Instagram Feed substitui completamente o placeholder */}
           <div className="lg:w-1/2 mt-12 lg:mt-0">
             <div className="relative">
-              {/* Placeholder for image */}
-              <div className="w-full h-96 lg:h-[600px] bg-gradient-to-br from-white/20 to-white/10 rounded-2xl backdrop-blur-sm flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-32 h-32 bg-white/20 rounded-full mb-6 mx-auto flex items-center justify-center">
-                    <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-semibold mb-2">Poder do Alto</h3>
-                  <p className="text-white/80">Experimentando o sobrenatural de Deus</p>
-                </div>
-              </div>
+              {/* Instagram Feed Component - SEM texto nem ícone */}
+              <InstagramFeed />
 
               {/* Floating Elements */}
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-yellow-300 rounded-full opacity-20 animate-pulse"></div>

@@ -40,7 +40,7 @@ const Header = () => {
         { name: 'Super Classe', href: '/escolas/super-classe' }
       ]
     },
-    { name: 'Área de Membro', href: '/membro' }
+    { name: 'Área do Voluntário', href: '/voluntario' }
   ];
 
   // Fecha dropdown quando clica fora

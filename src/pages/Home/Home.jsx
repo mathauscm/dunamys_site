@@ -77,7 +77,7 @@ const Home = () => {
           {/* Botão Valores e Crenças */}
           <div className="text-center mt-12">
             <a
-              href="http://127.0.0.1:5173/ministerio/missao-valores"
+              href="/ministerio/missao-valores"
               className="inline-block text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-colors duration-200 shadow-lg"
               style={{backgroundColor: '#8B9A3D'}}
             >
