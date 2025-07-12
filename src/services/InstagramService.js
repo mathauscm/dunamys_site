@@ -1,16 +1,18 @@
 /**
  * Instagram Service - Graph API
- * Usando a nova Instagram Graph API (pós-dezembro 2024)
- * Requer conta Instagram Business ou Creator
+ * Configurado para conta de teste, preparado para @dunamys
  */
 export class InstagramService {
   constructor() {
     this.accessToken = import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN;
     this.baseURL = 'https://graph.instagram.com';
     
-    // Verificar se o token foi configurado
+    // Debug info
+    console.log('🔧 Instagram Service iniciado');
+    console.log('🔑 Token configurado:', this.accessToken ? 'SIM' : 'NÃO');
+    
     if (!this.accessToken) {
-      console.warn('Token do Instagram não configurado. Usando dados de fallback.');
+      console.warn('⚠️ Token do Instagram não configurado. Usando dados de fallback.');
     }
   }
 
@@ -20,16 +22,23 @@ export class InstagramService {
   async getRecentPosts(limit = 6) {
     try {
       if (!this.accessToken) {
-        console.warn('Token não configurado. Retornando dados de fallback.');
+        console.warn('❌ Token não configurado. Retornando dados de fallback.');
         return this.getFallbackPosts();
       }
 
+      console.log('🔍 Tentando buscar posts da API...');
+      
       // Busca posts recentes usando Graph API
       const response = await fetch(
         `${this.baseURL}/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp&limit=${limit}&access_token=${this.accessToken}`
       );
 
+      console.log('📡 Resposta da API:', response.status, response.statusText);
+
       if (!response.ok) {
+        const errorData = await response.text();
+        console.error('❌ Erro da API:', errorData);
+        
         if (response.status === 401) {
           throw new Error('Token de acesso inválido ou expirado');
         } else if (response.status === 400) {
@@ -39,41 +48,18 @@ export class InstagramService {
       }
 
       const data = await response.json();
+      console.log('✅ Dados recebidos:', data);
       
       if (!data.data || data.data.length === 0) {
-        console.warn('Nenhum post encontrado. Retornando dados de fallback.');
+        console.warn('⚠️ Nenhum post encontrado. Retornando dados de fallback.');
         return this.getFallbackPosts();
       }
 
+      console.log('🎉 Posts encontrados:', data.data.length);
       return this.formatPostsData(data.data);
     } catch (error) {
-      console.error('Erro ao buscar posts do Instagram:', error);
+      console.error('❌ Erro ao buscar posts do Instagram:', error);
       return this.getFallbackPosts();
-    }
-  }
-
-  /**
-   * Busca informações da conta
-   */
-  async getAccountInfo() {
-    try {
-      if (!this.accessToken) {
-        return this.getFallbackAccountInfo();
-      }
-
-      const response = await fetch(
-        `${this.baseURL}/me?fields=id,username,account_type,media_count&access_token=${this.accessToken}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`Instagram API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Erro ao buscar informações da conta:', error);
-      return this.getFallbackAccountInfo();
     }
   }
 
@@ -95,75 +81,64 @@ export class InstagramService {
   }
 
   /**
-   * Trunca a caption para não ficar muito longa
-   */
-  truncateCaption(caption, maxLength = 100) {
-    if (caption.length <= maxLength) return caption;
-    return caption.substring(0, maxLength).trim() + '...';
-  }
-
-  /**
-   * Posts de fallback caso a API falhe
+   * Posts de fallback realistas (preparado para @dunamys)
    */
   getFallbackPosts() {
+    console.log('🔄 Usando posts de fallback');
     return [
       {
-        id: 'fallback-1',
-        mediaUrl: '/roll1.jpg',
-        thumbnailUrl: '/roll1.jpg',
-        mediaType: 'IMAGE',
-        caption: 'Culto de domingo na Dunamys! 🙏 #Fe #Poder #Dunamys',
-        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-        permalink: 'https://instagram.com/dunamys',
-        formattedDate: '2h',
-        isViewed: false
-      },
-      {
-        id: 'fallback-2',
+        id: 'dunamys-fallback-1',
         mediaUrl: '/background.jpg',
         thumbnailUrl: '/background.jpg',
         mediaType: 'IMAGE',
-        caption: 'Experimentando o sobrenatural de Deus 💪 #Dunamys #PoderDoAlto',
-        timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+        caption: 'Culto de domingo na Dunamys! Experimentando o poder sobrenatural de Deus 🙏 #Dunamys #PoderDoAlto #Fe',
+        timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3h atrás
         permalink: 'https://instagram.com/dunamys',
-        formattedDate: '5h',
+        formattedDate: '3h',
         isViewed: false
       },
       {
-        id: 'fallback-3',
+        id: 'dunamys-fallback-2',
+        mediaUrl: '/roll1.jpg',
+        thumbnailUrl: '/roll1.jpg',
+        mediaType: 'IMAGE',
+        caption: 'Unidos em oração e fé! A comunidade Dunamys se fortalece a cada dia 💪 #ComunidadeDunamys #Oracao',
+        timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), // 6h atrás
+        permalink: 'https://instagram.com/dunamys',
+        formattedDate: '6h',
+        isViewed: false
+      },
+      {
+        id: 'dunamys-fallback-3',
         mediaUrl: '/roll2.jpg',
         thumbnailUrl: '/roll2.jpg',
         mediaType: 'IMAGE',
-        caption: 'Unidos em oração e fé! 🤝 #Comunidade #Dunamys',
-        timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
+        caption: 'Palavra de fé transformando vidas! "Tudo é possível para aquele que crê" ✨ #PalavraDeFe #Transformacao',
+        timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(), // 12h atrás
         permalink: 'https://instagram.com/dunamys',
-        formattedDate: '8h',
+        formattedDate: '12h',
         isViewed: false
       },
       {
-        id: 'fallback-4',
+        id: 'dunamys-fallback-4',
         mediaUrl: '/uni.jpg',
         thumbnailUrl: '/uni.jpg',
         mediaType: 'IMAGE',
-        caption: 'Transformando vidas através do poder de Deus ✨',
-        timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+        caption: 'Momento de louvor e adoração! O coração se alegra na presença do Senhor 🎵 #Louvor #Adoracao #Dunamys',
+        timestamp: new Date(Date.now() - 18 * 60 * 60 * 1000).toISOString(), // 18h atrás
         permalink: 'https://instagram.com/dunamys',
-        formattedDate: '12h',
+        formattedDate: '18h',
         isViewed: false
       }
     ];
   }
 
   /**
-   * Informações de fallback da conta
+   * Trunca a caption para não ficar muito longa
    */
-  getFallbackAccountInfo() {
-    return {
-      id: 'dunamys_official',
-      username: 'dunamys',
-      account_type: 'BUSINESS',
-      media_count: 156
-    };
+  truncateCaption(caption, maxLength = 80) {
+    if (caption.length <= maxLength) return caption;
+    return caption.substring(0, maxLength).trim() + '...';
   }
 
   /**
@@ -193,28 +168,82 @@ export class InstagramService {
    */
   async checkTokenValidity() {
     try {
-      if (!this.accessToken) return false;
+      if (!this.accessToken) {
+        console.log('❌ Sem token para validar');
+        return false;
+      }
       
+      console.log('🔍 Validando token...');
       const response = await fetch(
         `${this.baseURL}/me?access_token=${this.accessToken}`
       );
-      return response.ok;
-    } catch {
+      
+      const isValid = response.ok;
+      console.log('🔑 Token válido:', isValid ? 'SIM' : 'NÃO');
+      
+      if (!isValid) {
+        const errorText = await response.text();
+        console.error('❌ Erro na validação:', errorText);
+      }
+      
+      return isValid;
+    } catch (error) {
+      console.error('❌ Erro ao validar token:', error);
       return false;
     }
+  }
+
+  /**
+   * Busca informações da conta (para debug)
+   */
+  async getAccountInfo() {
+    try {
+      if (!this.accessToken) {
+        return this.getFallbackAccountInfo();
+      }
+
+      console.log('🔍 Buscando informações da conta...');
+      const response = await fetch(
+        `${this.baseURL}/me?fields=id,username,account_type,media_count&access_token=${this.accessToken}`
+      );
+
+      if (!response.ok) {
+        console.error('❌ Erro ao buscar info da conta:', response.status);
+        return this.getFallbackAccountInfo();
+      }
+
+      const data = await response.json();
+      console.log('✅ Info da conta:', data);
+      return data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar informações da conta:', error);
+      return this.getFallbackAccountInfo();
+    }
+  }
+
+  /**
+   * Informações de fallback da conta
+   */
+  getFallbackAccountInfo() {
+    return {
+      id: 'dunamys_test',
+      username: 'dunamys',
+      account_type: 'BUSINESS',
+      media_count: 156
+    };
   }
 
   /**
    * Marca post como visualizado
    */
   markPostAsViewed(postId) {
-    const viewedPosts = JSON.parse(localStorage.getItem('viewedInstagramPosts') || '[]');
+    const viewedPosts = JSON.parse(localStorage.getItem('viewedDunamysPosts') || '[]');
     if (!viewedPosts.includes(postId)) {
       viewedPosts.push(postId);
       if (viewedPosts.length > 50) {
         viewedPosts.splice(0, viewedPosts.length - 50);
       }
-      localStorage.setItem('viewedInstagramPosts', JSON.stringify(viewedPosts));
+      localStorage.setItem('viewedDunamysPosts', JSON.stringify(viewedPosts));
     }
   }
 
@@ -222,31 +251,34 @@ export class InstagramService {
    * Verifica se post foi visualizado
    */
   isPostViewed(postId) {
-    const viewedPosts = JSON.parse(localStorage.getItem('viewedInstagramPosts') || '[]');
+    const viewedPosts = JSON.parse(localStorage.getItem('viewedDunamysPosts') || '[]');
     return viewedPosts.includes(postId);
   }
 
   /**
-   * Obtém informações de debug sobre o token
+   * Função de debug para testar manualmente
    */
-  async getTokenInfo() {
-    try {
-      if (!this.accessToken) {
-        return { error: 'Token não configurado' };
+  async debugToken() {
+    console.log('🔧 === DEBUG TOKEN ===');
+    console.log('Token:', this.accessToken ? 'Configurado' : 'Não configurado');
+    
+    if (this.accessToken) {
+      try {
+        // Teste básico
+        const response = await fetch(`${this.baseURL}/me?access_token=${this.accessToken}`);
+        console.log('Status:', response.status);
+        
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Dados da conta:', data);
+        } else {
+          const error = await response.text();
+          console.log('Erro:', error);
+        }
+      } catch (error) {
+        console.log('Erro na requisição:', error);
       }
-
-      const response = await fetch(
-        `${this.baseURL}/debug_token?input_token=${this.accessToken}&access_token=${this.accessToken}`
-      );
-
-      if (!response.ok) {
-        return { error: `Erro ${response.status}: ${response.statusText}` };
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return { error: error.message };
     }
+    console.log('🔧 === FIM DEBUG ===');
   }
 }
