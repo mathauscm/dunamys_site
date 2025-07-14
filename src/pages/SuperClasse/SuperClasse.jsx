@@ -7,8 +7,31 @@ const SuperClasse = () => {
     { titulo: "DOUTRINAS DA BÍBLIA", imagem: "/modulos/doutrinas.jpg" },
     { titulo: "ESCATOLOGIA", imagem: "/modulos/escatologia.jpg" },
     { titulo: "DIREÇÃO ESPIRITUAL", imagem: "/modulos/direcao.jpg" },
+    { titulo: "VIDA ABUNDANTE", imagem: "/modulos/direcao.jpg" },
+    { titulo: "INTIMIDADE", imagem: "/modulos/direcao.jpg" },
+    { titulo: "SOBRENATURAL", imagem: "/modulos/direcao.jpg" },
+    { titulo: "COBERTURA ESPIRITUAL", imagem: "/modulos/direcao.jpg" },
+    { titulo: "PREGANDO O EVANGELIO", imagem: "/modulos/direcao.jpg" },
+    { titulo: "O NOME DE JESUS", imagem: "/modulos/direcao.jpg" },
+    { titulo: "SOBRANATUAL 2 - UNÇÃO", imagem: "/modulos/direcao.jpg" },
+    { titulo: "HISTÓRIA DA IGREJA", imagem: "/modulos/direcao.jpg" },
+    { titulo: "GRAÇA", imagem: "/modulos/direcao.jpg" },
+    { titulo: "FRUTOS DA VIDA CRISTÃ", imagem: "/modulos/direcao.jpg" },
+    { titulo: `QUEM "EU SOU"`, imagem: "/modulos/direcao.jpg" },
+    { titulo: "ORANDO", imagem: "/modulos/direcao.jpg" },
+    { titulo: "A CURA LHE PERTENCE", imagem: "/modulos/direcao.jpg" },
+    { titulo: "PACTOS DA BÍBLIA", imagem: "/modulos/direcao.jpg" },
+    { titulo: "MINISTÉRIO", imagem: "/modulos/direcao.jpg" },
     // Adicione os outros módulos aqui...
   ];
+
+  const modulos2 = [
+    { titulo: "DOUTRINAS DA BÍBLIA", imagem: "/modulos/identidade.jpg" },
+    { titulo: "GRAÇA", imagem: "/modulos/identidade.jpg" },
+    { titulo: "COBERTURA ESPIRITUAL", imagem: "/modulos/identidade.jpg" },
+    { titulo: "A CURA ME PERTENCE", imagem: "/modulos/identidade.jpg" },
+    { titulo: "HISTÓRIA DA IGREJA", imagem: "/modulos/identidade.jpg" },
+  ]
 
   return (
     <div className="bg-black text-white">
@@ -27,7 +50,7 @@ const SuperClasse = () => {
 
       {/* Seção de Módulos */}
       <div className="bg-[#1a1a1a] py-20 px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">20 MÓDULOS</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">20 Módulos</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
           {modulos.map((modulo, index) => (
             <div
@@ -38,6 +61,25 @@ const SuperClasse = () => {
               <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-300" />
               <span className="z-10 text-xs sm:text-sm md:text-base lg:text-lg font-bold text-white text-center px-2 drop-shadow-md">
                 {modulo.titulo}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Seção de Módulos 2025.2 */}
+      <div className="bg-[#1a1a1a] py-20 px-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Módulos 2025.2</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
+          {modulos2.map((modulo2, index) => (
+            <div
+              key={index}
+              className="relative h-40 sm:h-48 md:h-56 lg:h-64 bg-center bg-cover flex items-center justify-center group overflow-hidden"
+              style={{ backgroundImage: `url(${modulo2.imagem})` }}
+            >
+              <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-300" />
+              <span className="z-10 text-xs sm:text-sm md:text-base lg:text-lg font-bold text-white text-center px-2 drop-shadow-md">
+                {modulo2.titulo}
               </span>
             </div>
           ))}
